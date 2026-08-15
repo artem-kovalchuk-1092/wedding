@@ -1,0 +1,119 @@
+:root {
+  --bg-deep: #1c2420;
+  --bg-mid: #2a3530;
+  --bg-soft: #3d4a43;
+  --page-max: 42rem;
+  --space: clamp(1.25rem, 4vw, 2.5rem);
+  --reveal-ease: cubic-bezier(0.33, 0, 0.2, 1);
+  --reveal-duration: 2s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-deep);
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(196, 164, 132, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 60%, rgba(90, 110, 100, 0.35), transparent 50%),
+    radial-gradient(ellipse 50% 45% at 0% 80%, rgba(50, 70, 60, 0.4), transparent 45%),
+    linear-gradient(165deg, var(--bg-mid) 0%, var(--bg-deep) 45%, #141a17 100%);
+  opacity: 0;
+  animation: atmosphere-in 2.2s var(--reveal-ease) forwards;
+}
+
+.invite {
+  width: min(100%, var(--page-max));
+  margin: 0 auto;
+  padding: var(--space);
+}
+
+.invite__page {
+  margin: 2px;
+  overflow: hidden;
+}
+
+.invite__page img {
+  width: 100%;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+  background: var(--bg-soft);
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.985);
+  filter: blur(4px);
+  transition:
+    opacity var(--reveal-duration) var(--reveal-ease),
+    transform var(--reveal-duration) var(--reveal-ease),
+    filter calc(var(--reveal-duration) * 1.15) var(--reveal-ease),
+    box-shadow var(--reveal-duration) var(--reveal-ease);
+  will-change: opacity, transform, filter;
+}
+
+.invite__page.is-visible img {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+@keyframes atmosphere-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmosphere {
+    animation: none;
+    opacity: 1;
+  }
+
+  .invite__page img {
+    transition: opacity 0.25s ease;
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-max: 36rem;
+  }
+
+  .invite__page img {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-max: 40rem;
+  }
+
+  .invite {
+    padding-top: clamp(2rem, 6vh, 3.5rem);
+    padding-bottom: clamp(2rem, 6vh, 3.5rem);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --page-max: 44rem;
+  }
+}

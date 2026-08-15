@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👰🤵 Приглашение 💍</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+
+  <main class="invite">
+    <figure class="invite__page invite__page--one">
+      <img
+        src="img/1.jpg"
+        alt="Приглашение — первая страница"
+        loading="eager"
+        decoding="async"
+      >
+    </figure>
+
+    <figure class="invite__page invite__page--two">
+      <img
+        src="img/2.jpg"
+        alt="Приглашение — вторая страница"
+        loading="eager"
+        decoding="async"
+      >
+    </figure>
+  </main>
+
+  <script>
+    (function () {
+      var pages = document.querySelectorAll(".invite__page");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      pages.forEach(function (page, index) {
+        var img = page.querySelector("img");
+        if (!img) return;
+
+        function reveal() {
+          var delay = reduce ? 0 : 180 + index * 480;
+          window.setTimeout(function () {
+            page.classList.add("is-visible");
+          }, delay);
+        }
+
+        if (img.complete && img.naturalWidth > 0) {
+          reveal();
+        } else {
+          img.addEventListener("load", reveal, { once: true });
+          img.addEventListener("error", reveal, { once: true });
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
